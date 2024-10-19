@@ -74,6 +74,8 @@ for link in player_links:
       break
     count += 1
 
+  while len(player_info) < 4:
+    player_info.append("N/A")
   players_info[player_ign] = player_info
   # IGN : [Real Name, [Agent, Usage, Rounds played, "Rating," ACS, K/D, ADR, KAST, KPR, APR, FKPR, FDPR, K, D, A, FK, FD]]
 print(players_info)

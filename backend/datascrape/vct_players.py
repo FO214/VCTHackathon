@@ -86,6 +86,6 @@ with open("VCTHackathon/backend/datascrape/teams.csv", 'w', newline='') as file:
 
 with open("VCTHackathon/backend/datascrape/players.csv", 'w', newline='') as file:
   writer = csv.writer(file)
-  writer.writerow(['IGN', 'Real Name', 'Stats'])
+  writer.writerow(['IGN', 'Real Name', 'Agent 1', 'Agent 2', 'Agent 3'])
   for ign, info in players_info.items():
     writer.writerow([ign] + [info[0]] + info[1:])

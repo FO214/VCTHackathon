@@ -6,6 +6,7 @@ import HowToPlay from './pages/HowToPlay';
 import Brackets from './pages/Brackets';
 import MakeYourTeam from './pages/MakeYourTeam';
 import MeetTheTeam from './pages/MeetTheTeam';
+import "./assets/Valorant.ttf"
 
 function App() {
   return (

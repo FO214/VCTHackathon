@@ -1,15 +1,27 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 const NavBar = () => {
   return (
-    <nav>
-      <Link to="/">VANTASY</Link>
-      <Link to="/how-to-play">HOW TO PLAY</Link>
-      <Link to="/brackets">BRACKETS</Link>
-      <Link to="/make-your-team">MAKE YOUR TEAM</Link>
-      <Link to="/meet-the-team">MEET THE TEAM</Link>
-      <Link to="/login">LOGIN</Link>
+    <nav className="navbar">
+      <NavLink to="/" className={({ isActive }) => (isActive ? 'nav-link nav-link-active' : 'nav-link')}>
+        VANTASY
+      </NavLink>
+      <NavLink to="/how-to-play" className={({ isActive }) => (isActive ? 'nav-link nav-link-active' : 'nav-link')}>
+        HOW TO PLAY
+      </NavLink>
+      <NavLink to="/brackets" className={({ isActive }) => (isActive ? 'nav-link nav-link-active' : 'nav-link')}>
+        BRACKETS
+      </NavLink>
+      <NavLink to="/make-your-team" className={({ isActive }) => (isActive ? 'nav-link nav-link-active' : 'nav-link')}>
+        MAKE YOUR TEAM
+      </NavLink>
+      <NavLink to="/meet-the-team" className={({ isActive }) => (isActive ? 'nav-link nav-link-active' : 'nav-link')}>
+        MEET THE TEAM
+      </NavLink>
+      <NavLink to="/login" className={({ isActive }) => (isActive ? 'nav-link nav-link-active' : 'nav-link')}>
+        LOGIN
+      </NavLink>
     </nav>
   );
 };

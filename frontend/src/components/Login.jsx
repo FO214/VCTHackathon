@@ -5,9 +5,9 @@ const Login = () => {
   return (
     <div className="login-wrapper">
       <img src={logo} alt="Vantasy Logo" className="logo" />
-      <input type="text" placeholder="Name" />
-      <input type="password" placeholder="Password" />
-      <button>Login</button>
+      <input type="text" placeholder="NAME" />
+      <input type="password" placeholder="PASSWORD" />
+      <button>LOGIN</button>
     </div>
   );
 };

@@ -1,0 +1,201 @@
+.bracket-container {
+  min-height: 50vh;
+  padding: 4rem;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Updated background pattern with gold accents */
+.bracket-container::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(circle at 50% 50%, rgba(255, 215, 0, 0.03) 0%, transparent 50%),
+    repeating-linear-gradient(45deg, rgba(255, 215, 0, 0.01) 0px, rgba(255, 215, 0, 0.01) 1px, transparent 1px, transparent 10px);
+  pointer-events: none;
+}
+
+.bracket-round {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 240px;
+}
+
+.bracket-match {
+  margin: 1rem 0;
+  position: relative;
+}
+
+/* Updated connecting lines with gold color */
+.bracket-line {
+  position: absolute;
+  background: #FFD700;
+  box-shadow: 0 0 8px rgba(255, 215, 0, 0.3);
+}
+
+.bracket-line-vertical {
+  width: 2px;
+  right: -30px;
+}
+
+.bracket-line-horizontal {
+  height: 2px;
+  right: -30px;
+  width: 30px;
+}
+
+.team-slot {
+  height: 48px;
+  background: #1a1a1a;
+  border-radius: 6px;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  position: relative;
+  transition: all 0.3s ease;
+  border: 1px solid #333;
+}
+
+/* Enhanced winner styling with full block glow */
+.team-slot.winner {
+  background: rgba(255, 215, 0, 0.15);
+  border: 1px solid #FFD700;
+  box-shadow: 
+    0 0 20px rgba(255, 215, 0, 0.4),
+    inset 0 0 10px rgba(255, 215, 0, 0.2);
+  animation: winnerPulse 2s infinite;
+}
+
+@keyframes winnerPulse {
+  0% {
+    background: rgba(255, 215, 0, 0.15);
+    box-shadow: 
+      0 0 20px rgba(255, 215, 0, 0.4),
+      inset 0 0 10px rgba(255, 215, 0, 0.2);
+  }
+  50% {
+    background: rgba(255, 215, 0, 0.25);
+    box-shadow: 
+      0 0 30px rgba(255, 215, 0, 0.6),
+      inset 0 0 15px rgba(255, 215, 0, 0.3);
+  }
+  100% {
+    background: rgba(255, 215, 0, 0.15);
+    box-shadow: 
+      0 0 20px rgba(255, 215, 0, 0.4),
+      inset 0 0 10px rgba(255, 215, 0, 0.2);
+  }
+}
+
+.team-slot:not(.winner):hover {
+  background: #252525;
+  border-color: #FFD700;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+}
+
+/* Team logo circle with gold border */
+.team-logo {
+  width: 24px;
+  height: 24px;
+  background: #1a1a1a;
+  border: 1px solid #FFD700;
+  border-radius: 50%;
+  margin-right: 12px;
+  flex-shrink: 0;
+}
+
+/* Updated team name styling with better contrast */
+.team-name {
+  color: #ffffff;
+  font-weight: 500;
+  flex-grow: 1;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+  letter-spacing: 0.02em;
+}
+
+.winner .team-name {
+  color: #ffffff;
+  font-weight: 600;
+  text-shadow: 
+    1px 1px 2px rgba(0, 0, 0, 0.8),
+    0 0 8px rgba(255, 215, 0, 0.5);
+}
+
+/* Updated score box */
+.team-score {
+  width: 48px;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  position: absolute;
+  right: 0;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+  font-weight: bold;
+}
+
+.winner .team-score {
+  background: rgba(255, 215, 0, 0.25);
+  color: #ffffff;
+  text-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+}
+
+/* Updated round titles */
+.round-title {
+  color: #FFD700;
+  text-transform: uppercase;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 24px;
+  letter-spacing: 0.05em;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+}
+
+.bracket-round:nth-child(2) {
+  margin-top: 120px;  /* Increased from 80px */
+}
+
+.bracket-round:nth-child(3) {
+  margin-top: 240px;  /* Increased from 160px */
+}
+
+.bracket-round:nth-child(4) {
+  margin-top: 240px;  /* Keeping consistent with semifinals */
+}
+
+/* Updated match spacing for better distribution */
+.bracket-round:nth-child(1) .bracket-match {
+  margin-bottom: 60px;  /* Increased from 40px */
+}
+
+.bracket-round:nth-child(2) .bracket-match {
+  margin-bottom: 160px;  /* Increased from 120px */
+}
+/* Final round special styling with enhanced gold */
+.bracket-round:last-child .round-title {
+  color: #FFD700;
+  text-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+}
+
+/* Responsive adjustments remain the same */
+@media (max-width: 1200px) {
+  .bracket-container {
+    padding: 2rem;
+    overflow-x: auto;
+  }
+  
+  .bracket-round {
+    width: 200px;
+  }
+}
+

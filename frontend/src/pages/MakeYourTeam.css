@@ -2,6 +2,7 @@
 .make-your-team-container {
   text-align: center;
   padding: 20px;
+  padding-top: 17rem;
   min-height: 60vh;
 }
 
@@ -88,4 +89,42 @@
 
 .submit-button:hover {
   background-color: #d0b24f;
+}
+
+
+/* Add these styles to your MakeYourTeam.css file */
+
+.make-your-team-container {
+  position: relative;
+  min-height: 100vh;
+}
+
+.main-content {
+  transition: margin-right 0.3s;
+}
+
+.chat-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.chat-container::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
+
+.chat-container::-webkit-scrollbar-thumb {
+  background: #e0c64f;
+  border-radius: 4px;
+}
+
+.chat-container::-webkit-scrollbar-thumb:hover {
+  background: #d0b24f;
+}
+
+input::placeholder {
+  color: #666;
+}
+
+input:focus {
+  outline: none;
+  border-color: #f0d65f;
 }

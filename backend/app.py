@@ -12,7 +12,7 @@ import boto3
 from csvstuff import maps_associated_with_team
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 load_dotenv()
 uri = os.getenv("uri")
@@ -164,6 +164,56 @@ def query_llama():
 
         parsed_response = json.loads(response['body'].read())
         return jsonify({'winner': parsed_response['text']})  # Ensure JSON response
+    
+    except Exception as e:
+        print(f"Error querying LLaMA model: {e}")
+        return "Sorry, I couldn't process your request."
+
+context = []
+with open("backend/datascrape/players.csv", "r") as file:
+    reader = csv.reader(file)
+    i = 0
+    for row in reader:
+        if (i == 40):
+            break
+        context.append(row)
+        i += 1
+
+@app.route('/chat', methods=['POST'])
+def WEBRINGTHEBOOM():
+    print("Received request")
+
+    # Parse the incoming JSON data
+    data = request.data.decode('utf-8')
+
+    prompt = f"""
+    Given this data about the players: {context}
+
+    answer this question to the best of your knowledge, but keep it short and concise for the user: {data}
+    """
+    
+    input_payload = {
+        "message": prompt
+    }
+
+    bedrock_runtime = boto3.client(
+    'bedrock-runtime',
+    region_name='us-east-1',
+    aws_access_key_id=os.getenv("AWS_ACCESS_KEY_ID"),
+    aws_secret_access_key=os.getenv("AWS_SECRET_ACCESS_KEY"),
+    )
+
+    try:
+        response = bedrock_runtime.invoke_model(
+            body=json.dumps(input_payload),
+            modelId="cohere.command-r-plus-v1:0", 
+            accept="application/json", 
+            contentType="application/json"
+        )
+
+        parsed_response = json.loads(response['body'].read())
+        print(parsed_response['text'])
+        return jsonify({'response': parsed_response['text']})  # Ensure JSON response
     
     except Exception as e:
         print(f"Error querying LLaMA model: {e}")

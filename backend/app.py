@@ -7,6 +7,7 @@ from pymongo.server_api import ServerApi
 from dotenv import load_dotenv
 from bson.json_util import dumps
 import os
+import csv
 import boto3
 from csvstuff import maps_associated_with_team
 
@@ -21,6 +22,7 @@ client = MongoClient(uri, server_api=ServerApi('1'))
 db = client['vcthackathon']
 collection = db['user-team']
 player_collection = db['players']
+teams_collection = db['teams']
 
 @app.route('/upload-user-team', methods=['POST'])
 def upload_user_team():
@@ -87,22 +89,58 @@ def get_all_players():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+@app.route('/get-teams', methods=['GET'])
+def get_teams():
+    try:
+        result = teams_collection.find()
+        
+        # Convert the cursor to a list of dictionaries
+        teams = list(result)
+        
+        if teams:
+            # Create a custom JSONEncoder to handle ObjectId serialization
+            class MongoJSONEncoder(json.JSONEncoder):
+                def default(self, obj):
+                    if isinstance(obj, ObjectId):
+                        return str(obj)
+                    return json.JSONEncoder.default(self, obj)
+            
+            # Use the custom encoder to serialize the teams
+            serialized_teams = json.dumps(teams, cls=MongoJSONEncoder)
+            
+            return jsonify(json.loads(serialized_teams))
+        else:
+            return jsonify({'message': 'No data found'}), 404
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 @app.route('/eval-winner', methods=['POST'])
 def query_llama():
-    data = request.json['prompt']
-    
+    print("Received request")
+
+    # Parse the incoming JSON data
+    data = request.data.decode('utf-8')
+    print(data)
+
     team1 = data.split(",")[0].strip()
     team2 = data.split(",")[1].strip()
+
+    team1_info = maps_associated_with_team(team1)
+    team2_info = maps_associated_with_team(team2)
+
+    if (team1 == "Your Team"):
+        team1_info = collection.find()
+    if (team2 == "Your Team"):
+        team2_info = collection.find()
 
     prompt = f"""
     Who will win between {team1} and {team2}?
     Here is information about team 1:
-    {maps_associated_with_team(team1)}
+    {team1_info}
 
     Here is information about team 2:
-    {maps_associated_with_team(team2)}
-    Although there is very little information, please provide me with a one word prediction for the winner.
+    {team2_info}
+    Although there is very little information, please provide me with a response only with the name of one team prediction for the winner.
     """
     
     input_payload = {
@@ -111,7 +149,7 @@ def query_llama():
 
     bedrock_runtime = boto3.client(
     'bedrock-runtime',
-    region_name='us-east-1',  # Update to your preferred region
+    region_name='us-east-1',
     aws_access_key_id=os.getenv("AWS_ACCESS_KEY_ID"),
     aws_secret_access_key=os.getenv("AWS_SECRET_ACCESS_KEY"),
     )
@@ -125,7 +163,7 @@ def query_llama():
         )
 
         parsed_response = json.loads(response['body'].read())
-        return parsed_response['text']  # Assuming 'text' is the field containing the model's response
+        return jsonify({'winner': parsed_response['text']})  # Ensure JSON response
     
     except Exception as e:
         print(f"Error querying LLaMA model: {e}")
@@ -148,6 +186,21 @@ def query_llama():
 #         "Agent 2" : player[3],
 #         "Agent 3" : player[4]
 #     })
+
+# Add every team to database
+# teams_data = []
+# with open('backend/datascrape/teams.csv', newline='') as file:
+#     reader = csv.reader(file)
+#     next(reader)
+#     for row in reader:
+#         teams_data.append(row)
+
+# for team in teams_data:
+#     teams_collection.insert_one({
+#         "Team" : team[0],
+#         "Players" : team[1]
+#     })
+
 
 if __name__ == '__main__':
     app.run(debug=True)

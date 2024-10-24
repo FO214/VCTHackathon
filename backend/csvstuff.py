@@ -2,7 +2,7 @@ import csv
 
 def maps_associated_with_team(team_name):
     maps = []
-    with open('VCTHackathon/backend/datascrape/maps.csv', newline='') as file:
+    with open('backend/datascrape/maps.csv', newline='') as file:
         reader = csv.reader(file)
         next(reader)
         for row in reader:

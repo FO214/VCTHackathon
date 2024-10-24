@@ -1,19 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import './MakeYourTeam.css';
 
-const players = [
-  { ign: "C0M", realName: "Corbin Lee", agents: ["Sova", "Viper", "Fade"] },
-  { ign: "B0B", realName: "Bob Jones", agents: ["Phoenix", "Jett", "Raze"] },
-  { ign: "L0G", realName: "Logan Smith", agents: ["Brimstone", "Cypher", "Killjoy"] },
-  { ign: "Z0E", realName: "Zoe Lee", agents: ["Reyna", "Omen", "Sage"] },
-  { ign: "T0M", realName: "Tom White", agents: ["Astra", "Yoru", "Breach"] },
-];
-
 const MakeYourTeam = () => {
   const [selectedPlayers, setSelectedPlayers] = useState(Array(5).fill(null));
   const [dropdownOpen, setDropdownOpen] = useState(Array(5).fill(false));
+  const [players, setPlayers] = useState([]); // State to hold players from the API
 
-  // Fetch current team from API on load
+  // Fetch players from API on load
+  useEffect(() => {
+    fetch('http://localhost:5000/get-all-players') // Replace with your actual backend API endpoint
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.message) {
+          console.warn(data.message); // Handle no data found scenario
+        } else {
+          setPlayers(data); // Set players state with fetched data
+        }
+      })
+      .catch((error) => {
+        console.error('Error fetching players:', error);
+      });
+  }, []);
+
+  // Fetch current team from API on load (if applicable)
   useEffect(() => {
     fetch('https://example.com/api/getTeam') // Replace with your actual backend API endpoint
       .then((response) => response.json())

@@ -66,13 +66,16 @@ def get_all_players():
     try:
         result = player_collection.find()
         
-        if result:
-            result_str = dumps(result)
-            return jsonify(result_str)
+        # Convert the cursor to a list of dictionaries
+        players = list(result)
+        
+        if players:
+            return jsonify(players)
         else:
             return jsonify({'message': 'No data found'}), 404
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
 
 @app.route('/eval-winner', methods=['POST'])
 def query_llama():

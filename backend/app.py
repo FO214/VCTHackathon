@@ -1,4 +1,5 @@
 import json
+from bson import ObjectId
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from pymongo import MongoClient
@@ -70,7 +71,17 @@ def get_all_players():
         players = list(result)
         
         if players:
-            return jsonify(players)
+            # Create a custom JSONEncoder to handle ObjectId serialization
+            class MongoJSONEncoder(json.JSONEncoder):
+                def default(self, obj):
+                    if isinstance(obj, ObjectId):
+                        return str(obj)
+                    return json.JSONEncoder.default(self, obj)
+            
+            # Use the custom encoder to serialize the players
+            serialized_players = json.dumps(players, cls=MongoJSONEncoder)
+            
+            return jsonify(json.loads(serialized_players))
         else:
             return jsonify({'message': 'No data found'}), 404
     except Exception as e:

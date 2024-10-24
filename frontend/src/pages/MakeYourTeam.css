@@ -1,90 +1,91 @@
 /* MakeYourTeam.css */
 .make-your-team-container {
-    text-align: center;
-    padding: 20px;
-    min-height: 60vh;
-  }
-  
-  .title {
-    color: white;
-    font-size: 3.5rem; /* Increased size */
-    margin-bottom: 30px;
-  }
-  
-  .player-card-container {
-    display: flex;
-    justify-content: center;
-    gap: 30px; /* Increased gap */
-  }
-  
-  .player-card {
-    width: 200px;
-    height: 250px; 
-    background: rgba(255, 255, 255, 0.1); 
-    border: 2px solid #e0c64f; 
-    border-radius: 15px; 
-    position: relative;
-    cursor: pointer;
-  }
-  
-  .add-button {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: rgba(255, 255, 255, 0.15);
-    border-radius: 50%;
-    width: 70px; /* Increased size */
-    height: 70px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 2.5rem; /* Increased font size */
-    color: white;
-  }
-  
-  .dropdown-menu {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background: rgba(0, 0, 0, 0.9);
-    border: 1px solid #e0c64f;
-    border-radius: 5px;
-    color: white;
-    padding: 5px;
-    z-index: 1;
-  }
-  
-  .dropdown-item {
-    padding: 8px 12px; /* Increased padding */
-    cursor: pointer;
-    transition: background-color 0.2s;
-  }
-  
-  .dropdown-item:hover {
-    background-color: rgba(255, 255, 255, 0.2);
-  }
-  
-  .player-info {
-    padding: 15px; /* Increased padding */
-    color: white;
-    text-align: center;
-    font-size: 1.1rem; /* Slightly increased font size */
-  }
-  
-  .submit-button {
-    margin-top: 30px; /* Increased margin */
-    padding: 15px 30px; /* Increased padding */
-    background-color: #e0c64f;
-    border: none;
-    color: #1c1c1e;
-    font-size: 1.5rem; /* Increased font size */
-    border-radius: 10px;
-    cursor: pointer;
-  }
-  
-  .submit-button:hover {
-    background-color: #d0b24f;
-  }
-  
+  text-align: center;
+  padding: 20px;
+  min-height: 60vh;
+}
+
+.title {
+  color: white;
+  font-size: 3.5rem;
+  margin-bottom: 30px;
+}
+
+.player-card-container {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+}
+
+.player-card {
+  width: 200px;
+  height: 250px; 
+  background: rgba(255, 255, 255, 0.1); 
+  border: 2px solid #e0c64f; 
+  border-radius: 15px; 
+  position: relative;
+  cursor: pointer;
+}
+
+.add-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(255, 255, 255, 0.15);
+  border-radius: 50%;
+  width: 70px; 
+  height: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2.5rem; 
+  color: white;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.9);
+  border: 1px solid #e0c64f;
+  border-radius: 5px;
+  color: white;
+  padding: 5px;
+  z-index: 1;
+  max-height: 150px; /* Set a maximum height */
+  overflow-y: auto; /* Enable vertical scrolling */
+}
+
+.dropdown-item {
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.dropdown-item:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.player-info {
+  padding: 15px;
+  color: white;
+  text-align: center;
+  font-size: 1.1rem;
+}
+
+.submit-button {
+  margin-top: 30px;
+  padding: 15px 30px;
+  background-color: #e0c64f;
+  border: none;
+  color: #1c1c1e;
+  font-size: 1.5rem;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.submit-button:hover {
+  background-color: #d0b24f;
+}
